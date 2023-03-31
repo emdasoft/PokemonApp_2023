@@ -1,7 +1,8 @@
-package com.emdasoft.pokemonapp2023
+package com.emdasoft.pokemonapp2023.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.emdasoft.pokemonapp2023.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
