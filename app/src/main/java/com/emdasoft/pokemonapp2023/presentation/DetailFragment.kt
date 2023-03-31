@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.emdasoft.pokemonapp2023.R
 import com.emdasoft.pokemonapp2023.databinding.FragmentDetailBinding
 import com.google.android.material.chip.Chip
 
@@ -42,8 +43,10 @@ class DetailFragment : Fragment() {
 
         viewModel.pokemon.observe(viewLifecycleOwner) {
             binding.nameTextView.text = it.name
-            binding.heightText.text = it.height.toString()
-            binding.weightText.text = it.weight.toString()
+            binding.heightText.text =
+                String.format(resources.getString(R.string.height), it.height * CORRECTION_INDEX)
+            binding.weightText.text =
+                String.format(resources.getString(R.string.weight), it.weight / CORRECTION_INDEX)
             it.types.forEach {
                 val chip = Chip(binding.chipGroup.context)
                 chip.text = it.types.name
@@ -55,6 +58,14 @@ class DetailFragment : Fragment() {
 
         }
 
+        setOnBackPressedListener()
+
+    }
+
+    private fun setOnBackPressedListener() {
+        binding.backButton.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
     }
 
     private fun parseArgs() {
@@ -73,6 +84,7 @@ class DetailFragment : Fragment() {
 
         private const val POKEMON_ID = "pokemon_id"
         private const val UNDEFINED_ID = -1
+        private const val CORRECTION_INDEX = 10.0
 
         @JvmStatic
         fun newInstance(pokemonId: Int): DetailFragment {

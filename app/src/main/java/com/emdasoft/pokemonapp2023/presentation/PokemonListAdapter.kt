@@ -57,7 +57,6 @@ class PokemonListAdapter(private val listener: SetOnItemClickListener) :
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         holder.bindItem(pokemonList[position], position, listener)
-//        holder.itemView.setOnClickListener { listener.onItemClickListener(position) }
     }
 
     interface SetOnItemClickListener {

@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAllCaps="true"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
                 tools:text="Pikachu" />
@@ -54,6 +55,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView"
+                android:text="@string/height"
                 tools:text="Height: 100 cm" />
 
             <TextView
@@ -66,6 +68,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/heightText"
+                android:text="@string/weight"
                 tools:text="Weight: 1kg" />
 
             <LinearLayout
@@ -86,5 +89,15 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/back_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/back_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
