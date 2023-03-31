@@ -1,60 +1,74 @@
 package com.emdasoft.pokemonapp2023.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.emdasoft.pokemonapp2023.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.emdasoft.pokemonapp2023.databinding.FragmentDetailBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var pokemonId = UNDEFINED_ID
+
+    private lateinit var viewModel: PokemonDetailViewModel
+
+    private var _binding: FragmentDetailBinding? = null
+    private val binding: FragmentDetailBinding
+        get() = _binding ?: throw RuntimeException("FragmentDetailBinding = null")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        parseArgs()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+    ): View {
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this)[PokemonDetailViewModel::class.java]
+
+        viewModel.getPokemon(pokemonId)
+
+        viewModel.pokemon.observe(viewLifecycleOwner) {
+            binding.tvName.text = it.name
+        }
+
+    }
+
+    private fun parseArgs() {
+        if (!requireArguments().containsKey(POKEMON_ID)) {
+            throw RuntimeException("Pokemon ID is absent")
+        }
+        pokemonId = requireArguments().getInt(POKEMON_ID)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
+        private const val POKEMON_ID = "pokemon_id"
+        private const val UNDEFINED_ID = -1
+
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailFragment().apply {
+        fun newInstance(pokemonId: Int): DetailFragment {
+            return DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putInt(POKEMON_ID, pokemonId)
                 }
             }
+        }
     }
+
 }

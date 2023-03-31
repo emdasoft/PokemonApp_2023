@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emdasoft.pokemonapp2023.R
 import com.emdasoft.pokemonapp2023.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), PokemonListAdapter.SetOnItemClickListener {
 
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
@@ -49,11 +51,19 @@ class MainFragment : Fragment() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            rvAdapter = PokemonListAdapter()
+            rvAdapter = PokemonListAdapter(this@MainFragment)
             rvPokemonNames.adapter = rvAdapter
         }
     }
 
+    override fun onItemClickListener(position: Int) {
+        Toast.makeText(requireContext(), "$position", Toast.LENGTH_SHORT).show()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, DetailFragment.newInstance(
+                position + INDEX_OFFSET))
+            .addToBackStack(null)
+            .commit()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -61,9 +71,6 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        @JvmStatic
-        fun newInstance(): MainFragment {
-            return MainFragment()
-        }
+        private const val INDEX_OFFSET = 1
     }
 }

@@ -1,25 +1,31 @@
 package com.emdasoft.pokemonapp2023.data
 
-import com.emdasoft.pokemonapp2023.domain.models.PokeName
+import com.emdasoft.pokemonapp2023.data.mappers.PokemonDetailMapper
+import com.emdasoft.pokemonapp2023.data.mappers.PokemonListMapper
+import com.emdasoft.pokemonapp2023.data.retrofit.RetrofitInstance
+import com.emdasoft.pokemonapp2023.domain.models.PokeResult
 import com.emdasoft.pokemonapp2023.domain.models.Pokemon
 import com.emdasoft.pokemonapp2023.domain.repository.Repository
 
 object RepositoryImpl : Repository {
 
-    private val pokemonList = mutableListOf<PokeName>()
-    private var autoIncrementID = 0
+    private val listMapper = PokemonListMapper()
+    private val modelMapper = PokemonDetailMapper()
 
-    init {
-        for (item in 0..20) {
-            pokemonList.add(PokeName(item.toString()))
+    override suspend fun getPokemonList(): List<PokeResult> {
+        val response = RetrofitInstance.apiService.getPokemonList()
+        response.body()?.let {
+            return listMapper.mapListApiModelToListModel(it.results)
         }
+        return emptyList()
     }
 
-    override fun getPokemonList(): List<PokeName> {
-        return pokemonList.toList()
-    }
-
-    override fun getPokemonDetails(pokemonId: Int): Pokemon {
-        return Pokemon(autoIncrementID++, pokemonList[pokemonId].toString(), 10, 10)
+    override suspend fun getPokemonDetails(pokemonId: Int): Pokemon? {
+        val pokemonResponse = RetrofitInstance.apiService.getPokemonInfo(
+            pokemonId
+        )
+        return pokemonResponse.body()?.let {
+            modelMapper.mapApiModelToModel(it)
+        }
     }
 }

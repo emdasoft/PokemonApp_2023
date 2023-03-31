@@ -5,7 +5,7 @@ import com.emdasoft.pokemonapp2023.domain.repository.Repository
 
 class GetPokemonDetailsUseCase(private val repository: Repository) {
 
-    operator fun invoke(pokemonId: Int): Pokemon {
+    suspend fun getPokemonDetails(pokemonId: Int): Pokemon? {
         return repository.getPokemonDetails(pokemonId)
     }
 

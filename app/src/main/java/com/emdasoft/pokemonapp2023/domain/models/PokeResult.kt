@@ -1,5 +1,5 @@
 package com.emdasoft.pokemonapp2023.domain.models
 
-data class PokeName (
+data class PokeResult (
     val name: String
 )
