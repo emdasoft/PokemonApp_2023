@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.emdasoft.pokemonapp2023.databinding.FragmentDetailBinding
 import com.google.android.material.chip.Chip
 
@@ -50,6 +51,7 @@ class DetailFragment : Fragment() {
                 chip.isCheckable = false
                 binding.chipGroup.addView(chip)
             }
+            Glide.with(this).load(it.sprites.frontDefault).into(binding.imageView)
 
         }
 
