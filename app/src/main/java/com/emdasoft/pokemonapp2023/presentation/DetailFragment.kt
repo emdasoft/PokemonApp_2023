@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.emdasoft.pokemonapp2023.databinding.FragmentDetailBinding
+import com.google.android.material.chip.Chip
 
 class DetailFragment : Fragment() {
 
@@ -39,7 +40,17 @@ class DetailFragment : Fragment() {
         viewModel.getPokemon(pokemonId)
 
         viewModel.pokemon.observe(viewLifecycleOwner) {
-            binding.tvName.text = it.name
+            binding.nameTextView.text = it.name
+            binding.heightText.text = it.height.toString()
+            binding.weightText.text = it.weight.toString()
+            it.types.forEach {
+                val chip = Chip(binding.chipGroup.context)
+                chip.text = it.types.name
+                chip.isClickable = false
+                chip.isCheckable = false
+                binding.chipGroup.addView(chip)
+            }
+
         }
 
     }
