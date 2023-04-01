@@ -15,7 +15,9 @@ class DetailFragment : Fragment() {
 
     private var pokemonId = UNDEFINED_ID
 
-    private lateinit var viewModel: PokemonDetailViewModel
+    private val viewModel by lazy {
+        ViewModelProvider(this)[PokemonDetailViewModel::class.java]
+    }
 
     private var _binding: FragmentDetailBinding? = null
     private val binding: FragmentDetailBinding
@@ -37,10 +39,15 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[PokemonDetailViewModel::class.java]
-
         viewModel.getPokemon(pokemonId)
 
+        bindViews()
+
+        setOnBackPressedListener()
+
+    }
+
+    private fun bindViews() {
         viewModel.pokemon.observe(viewLifecycleOwner) {
             binding.nameTextView.text = it.name
             binding.heightText.text =
@@ -57,9 +64,6 @@ class DetailFragment : Fragment() {
             Glide.with(this).load(it.sprites.frontDefault).into(binding.imageView)
 
         }
-
-        setOnBackPressedListener()
-
     }
 
     private fun setOnBackPressedListener() {

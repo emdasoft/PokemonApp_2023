@@ -1,4 +1,4 @@
-package com.emdasoft.pokemonapp2023.data.api.models
+package com.emdasoft.pokemonapp2023.data.model
 
 data class PokeApiResponse (
     val count: Int,

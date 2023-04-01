@@ -1,11 +1,11 @@
 package com.emdasoft.pokemonapp2023.presentation
 
 import androidx.recyclerview.widget.DiffUtil
-import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.PokeName
 
 class PokemonListDiffCallback(
-    private val oldList: List<PokeResult>,
-    private val newList: List<PokeResult>
+    private val oldList: List<PokeName>,
+    private val newList: List<PokeName>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

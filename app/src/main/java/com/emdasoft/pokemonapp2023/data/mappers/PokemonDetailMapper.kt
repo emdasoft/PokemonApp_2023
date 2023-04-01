@@ -1,25 +1,25 @@
 package com.emdasoft.pokemonapp2023.data.mappers
 
-import com.emdasoft.pokemonapp2023.data.api.models.PokemonResponse
-import com.emdasoft.pokemonapp2023.data.api.models.SpriteResponse
-import com.emdasoft.pokemonapp2023.data.api.models.TypeResponse
-import com.emdasoft.pokemonapp2023.data.api.models.TypesResponse
-import com.emdasoft.pokemonapp2023.domain.entity.Pokemon
-import com.emdasoft.pokemonapp2023.domain.entity.Sprite
-import com.emdasoft.pokemonapp2023.domain.entity.Type
-import com.emdasoft.pokemonapp2023.domain.entity.Types
+import com.emdasoft.pokemonapp2023.data.model.PokemonResponse
+import com.emdasoft.pokemonapp2023.data.model.SpriteResponse
+import com.emdasoft.pokemonapp2023.data.model.TypeResponse
+import com.emdasoft.pokemonapp2023.data.model.TypesResponse
+import com.emdasoft.pokemonapp2023.domain.entity.PokeInfo
+import com.emdasoft.pokemonapp2023.domain.entity.PokeSprite
+import com.emdasoft.pokemonapp2023.domain.entity.PokeType
+import com.emdasoft.pokemonapp2023.domain.entity.PokeTypes
 
 class PokemonDetailMapper {
 
-    private fun mapSpriteApiToEntitySprite(sprite: SpriteResponse) = Sprite(
+    private fun mapSpriteApiToEntitySprite(sprite: SpriteResponse) = PokeSprite(
         frontDefault = sprite.frontDefault
     )
 
-    private fun mapTypeApiToEntityType(type: TypeResponse) = Type(
+    private fun mapTypeApiToEntityType(type: TypeResponse) = PokeType(
         name = type.name
     )
 
-    private fun mapTypesApiToEntityTypes(types: TypesResponse) = Types(
+    private fun mapTypesApiToEntityTypes(types: TypesResponse) = PokeTypes(
         types = mapTypeApiToEntityType(types.types)
     )
 
@@ -27,7 +27,7 @@ class PokemonDetailMapper {
         mapTypesApiToEntityTypes(it)
     }
 
-    fun mapApiModelToEntity(pokemon: PokemonResponse) = Pokemon(
+    fun mapApiModelToEntity(pokemon: PokemonResponse) = PokeInfo(
         id = pokemon.id,
         name = pokemon.name,
         weight = pokemon.weight,

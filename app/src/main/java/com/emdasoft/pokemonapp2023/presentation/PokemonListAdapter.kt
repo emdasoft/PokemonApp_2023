@@ -1,18 +1,16 @@
 package com.emdasoft.pokemonapp2023.presentation
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.emdasoft.pokemonapp2023.R
 import com.emdasoft.pokemonapp2023.databinding.ListItemBinding
-import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.PokeName
 
 class PokemonListAdapter(private val listener: SetOnItemClickListener) :
-    RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder>() {
+    RecyclerView.Adapter<PokemonViewHolder>() {
 
-    var pokemonList = emptyList<PokeResult>()
+    var pokemonList = emptyList<PokeName>()
         set(value) {
             val callback = PokemonListDiffCallback(pokemonList, value)
             val diffResult = DiffUtil.calculateDiff(callback)
@@ -20,31 +18,13 @@ class PokemonListAdapter(private val listener: SetOnItemClickListener) :
             field = value
         }
 
-    class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val binding = ListItemBinding.bind(itemView)
-
-        fun bindItem(
-            pokeName: PokeResult,
-            position: Int,
-            listener: SetOnItemClickListener
-        ) =
-            with(binding) {
-                tvPokemonName.text = pokeName.name
-                tvPokemonId.text = String.format("#%s", position + INDEX_OFFSET)
-                itemView.setOnClickListener {
-                    listener.onItemClickListener(position)
-                }
-            }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.list_item,
+        val binding = ListItemBinding.inflate(
+            LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return PokemonViewHolder(view)
+        return PokemonViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -52,11 +32,18 @@ class PokemonListAdapter(private val listener: SetOnItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
-        holder.bindItem(pokemonList[position], position, listener)
+        val binding = holder.binding
+        val pokemonItem = pokemonList[position]
+        with(binding) {
+            tvPokemonName.text = pokemonItem.name
+            tvPokemonId.text = String.format("#%s", position + INDEX_OFFSET)
+            root.setOnClickListener {
+                listener.onItemClickListener(position)
+            }
+        }
     }
 
     interface SetOnItemClickListener {
-
         fun onItemClickListener(position: Int)
     }
 

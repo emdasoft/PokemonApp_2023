@@ -1,7 +1,7 @@
 package com.emdasoft.pokemonapp2023.data.retrofit
 
-import com.emdasoft.pokemonapp2023.data.api.models.PokeApiResponse
-import com.emdasoft.pokemonapp2023.data.api.models.PokemonResponse
+import com.emdasoft.pokemonapp2023.data.model.PokeApiResponse
+import com.emdasoft.pokemonapp2023.data.model.PokemonResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

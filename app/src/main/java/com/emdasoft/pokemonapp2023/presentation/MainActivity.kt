@@ -1,8 +1,7 @@
 package com.emdasoft.pokemonapp2023.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.emdasoft.pokemonapp2023.R
+import androidx.appcompat.app.AppCompatActivity
 import com.emdasoft.pokemonapp2023.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
