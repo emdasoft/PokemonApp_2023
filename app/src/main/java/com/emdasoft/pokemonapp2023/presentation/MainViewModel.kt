@@ -26,5 +26,4 @@ class MainViewModel : ViewModel() {
         }
     }
 
-
 }

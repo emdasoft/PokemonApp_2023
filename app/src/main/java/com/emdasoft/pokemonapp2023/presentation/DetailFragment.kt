@@ -56,12 +56,12 @@ class DetailFragment : Fragment() {
                 String.format(resources.getString(R.string.weight), it.weight / CORRECTION_INDEX)
             it.types.forEach {
                 val chip = Chip(binding.chipGroup.context)
-                chip.text = it.types.name
+                chip.text = it
                 chip.isClickable = false
                 chip.isCheckable = false
                 binding.chipGroup.addView(chip)
             }
-            Glide.with(this).load(it.sprites.frontDefault).into(binding.imageView)
+            Glide.with(this).load(it.sprite).into(binding.imageView)
 
         }
     }

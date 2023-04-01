@@ -1,5 +1,4 @@
 package com.emdasoft.pokemonapp2023.data.network
-import com.emdasoft.pokemonapp2023.data.retrofit.PokeApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
