@@ -1,6 +1,5 @@
 package com.emdasoft.pokemonapp2023.presentation
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.emdasoft.pokemonapp2023.R
 import com.emdasoft.pokemonapp2023.databinding.ListItemBinding
-import com.emdasoft.pokemonapp2023.domain.models.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
 
 class PokemonListAdapter(private val listener: SetOnItemClickListener) :
     RecyclerView.Adapter<PokemonListAdapter.PokemonViewHolder>() {
@@ -20,8 +19,6 @@ class PokemonListAdapter(private val listener: SetOnItemClickListener) :
             diffResult.dispatchUpdatesTo(this)
             field = value
         }
-
-    private var count = 0
 
     class PokemonViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -42,7 +39,6 @@ class PokemonListAdapter(private val listener: SetOnItemClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        Log.d("onCreateViewHolder", "${++count}")
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.list_item,
             parent,

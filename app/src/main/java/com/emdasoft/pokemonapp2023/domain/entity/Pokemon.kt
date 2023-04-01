@@ -1,4 +1,4 @@
-package com.emdasoft.pokemonapp2023.domain.models
+package com.emdasoft.pokemonapp2023.domain.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

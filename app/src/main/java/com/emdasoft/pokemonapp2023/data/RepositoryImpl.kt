@@ -3,8 +3,8 @@ package com.emdasoft.pokemonapp2023.data
 import com.emdasoft.pokemonapp2023.data.mappers.PokemonDetailMapper
 import com.emdasoft.pokemonapp2023.data.mappers.PokemonListMapper
 import com.emdasoft.pokemonapp2023.data.retrofit.RetrofitInstance
-import com.emdasoft.pokemonapp2023.domain.models.PokeResult
-import com.emdasoft.pokemonapp2023.domain.models.Pokemon
+import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.Pokemon
 import com.emdasoft.pokemonapp2023.domain.repository.Repository
 
 object RepositoryImpl : Repository {
@@ -15,7 +15,7 @@ object RepositoryImpl : Repository {
     override suspend fun getPokemonList(): List<PokeResult> {
         val response = RetrofitInstance.apiService.getPokemonList()
         response.body()?.let {
-            return listMapper.mapListApiModelToListModel(it.results)
+            return listMapper.mapListApiModelToListEntity(it.results)
         }
         return emptyList()
     }
@@ -25,7 +25,7 @@ object RepositoryImpl : Repository {
             pokemonId
         )
         return pokemonResponse.body()?.let {
-            modelMapper.mapApiModelToModel(it)
+            modelMapper.mapApiModelToEntity(it)
         }
     }
 }

@@ -19,7 +19,7 @@ interface PokeApiService {
     suspend fun getPokemonInfo(@Path("id") id: Int): Response<PokemonResponse>
 
     companion object {
-        private const val DEFAULT_LIMIT = 100
+        private const val DEFAULT_LIMIT = 1000
         private const val DEFAULT_OFFSET = 0
     }
 

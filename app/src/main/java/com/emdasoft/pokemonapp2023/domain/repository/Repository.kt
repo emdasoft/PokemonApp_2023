@@ -1,7 +1,7 @@
 package com.emdasoft.pokemonapp2023.domain.repository
 
-import com.emdasoft.pokemonapp2023.domain.models.PokeResult
-import com.emdasoft.pokemonapp2023.domain.models.Pokemon
+import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.Pokemon
 
 interface Repository {
 

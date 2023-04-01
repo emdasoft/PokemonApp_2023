@@ -1,8 +1,6 @@
 <resources>
-    <string name="app_name">Pokemon App 2023</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name">Pokemon App</string>
     <string name="height">Height: %s cm</string>
     <string name="weight">Weight: %s kg</string>
-    <string name="back_btn">go back</string>
+    <string name="back_btn">return</string>
 </resources>

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emdasoft.pokemonapp2023.data.RepositoryImpl
-import com.emdasoft.pokemonapp2023.domain.models.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
 import com.emdasoft.pokemonapp2023.domain.usecases.GetPokemonListUseCase
 import kotlinx.coroutines.launch
 

@@ -1,7 +1,7 @@
 package com.emdasoft.pokemonapp2023.presentation
 
 import androidx.recyclerview.widget.DiffUtil
-import com.emdasoft.pokemonapp2023.domain.models.PokeResult
+import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
 
 class PokemonListDiffCallback(
     private val oldList: List<PokeResult>,
