@@ -54,14 +54,19 @@ class DetailFragment : Fragment() {
                 String.format(resources.getString(R.string.height), it.height * CORRECTION_INDEX)
             binding.weightText.text =
                 String.format(resources.getString(R.string.weight), it.weight / CORRECTION_INDEX)
-            it.types.forEach {
-                val chip = Chip(binding.chipGroup.context)
-                chip.text = it
-                chip.isClickable = false
-                chip.isCheckable = false
-                binding.chipGroup.addView(chip)
+//            it.types.forEach {
+//                val chip = Chip(binding.chipGroup.context)
+//                chip.text = it
+//                chip.isClickable = false
+//                chip.isCheckable = false
+//                binding.chipGroup.addView(chip)
+//            }
+
+            try {
+                Glide.with(this).load(it.sprite).into(binding.imageView)
+            } catch (e: Exception) {
+                binding.imageView.setImageResource(R.drawable.tv_ball)
             }
-            Glide.with(this).load(it.sprite).into(binding.imageView)
 
         }
     }

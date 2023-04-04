@@ -4,5 +4,5 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class PokeSpriteDto(
-    @Expose @SerializedName("front_default") val frontDefault: String?,
+    @Expose @SerializedName("front_default") val frontDefault: String,
 )

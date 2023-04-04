@@ -10,6 +10,6 @@ data class PokeInfoDbModel(
     val name: String,
     val weight: Int,
     val height: Int,
-    val sprite: String?,
-    val types: List<String>
+    val sprite: String,
+    val types: String
 )

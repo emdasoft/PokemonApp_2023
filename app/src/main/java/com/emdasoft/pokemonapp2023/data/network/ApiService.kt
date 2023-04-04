@@ -13,10 +13,10 @@ interface PokeApiService {
     suspend fun getPokemonList(
         @Query("limit") limit: Int = DEFAULT_LIMIT,
         @Query("offset") offset: Int = DEFAULT_OFFSET
-    ): Response<PokeApiResponse>
+    ): PokeApiResponse
 
     @GET("pokemon/{id}")
-    suspend fun getPokemonInfo(@Path("id") id: Int): Response<PokeInfoDto>
+    suspend fun getPokemonInfo(@Path("id") id: Int): PokeInfoDto
 
     companion object {
         private const val DEFAULT_LIMIT = 1000

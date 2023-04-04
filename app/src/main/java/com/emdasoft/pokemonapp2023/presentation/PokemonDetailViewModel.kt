@@ -1,17 +1,15 @@
 package com.emdasoft.pokemonapp2023.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.emdasoft.pokemonapp2023.data.RepositoryImpl
 import com.emdasoft.pokemonapp2023.domain.entity.PokeInfo
 import com.emdasoft.pokemonapp2023.domain.usecases.GetPokemonDetailsUseCase
 import kotlinx.coroutines.launch
 
-class PokemonDetailViewModel : ViewModel() {
+class PokemonDetailViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = RepositoryImpl
+    private val repository = RepositoryImpl(application)
 
     private val getPokemonDetailsUseCase = GetPokemonDetailsUseCase(repository)
 
