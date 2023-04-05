@@ -1,12 +1,12 @@
 package com.emdasoft.pokemonapp2023.domain.repository
 
-import com.emdasoft.pokemonapp2023.domain.entity.PokeResult
-import com.emdasoft.pokemonapp2023.domain.entity.Pokemon
+import com.emdasoft.pokemonapp2023.domain.entity.PokeInfo
+import com.emdasoft.pokemonapp2023.domain.entity.PokeName
 
 interface Repository {
 
-    suspend fun getPokemonList(): List<PokeResult>
+    suspend fun getPokemonList(): List<PokeName>
 
-    suspend fun getPokemonDetails(pokemonId: Int): Pokemon?
+    suspend fun getPokemonDetails(pokemonName: String): PokeInfo
 
 }

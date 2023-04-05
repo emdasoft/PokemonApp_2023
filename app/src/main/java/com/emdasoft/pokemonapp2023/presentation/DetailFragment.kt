@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -13,9 +14,11 @@ import com.google.android.material.chip.Chip
 
 class DetailFragment : Fragment() {
 
-    private var pokemonId = UNDEFINED_ID
+    private var pokemonName = UNDEFINED_NAME
 
-    private lateinit var viewModel: PokemonDetailViewModel
+    private val viewModel by lazy {
+        ViewModelProvider(this)[PokemonDetailViewModel::class.java]
+    }
 
     private var _binding: FragmentDetailBinding? = null
     private val binding: FragmentDetailBinding
@@ -37,29 +40,55 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[PokemonDetailViewModel::class.java]
+        viewModel.getPokemon(pokemonName)
 
-        viewModel.getPokemon(pokemonId)
-
-        viewModel.pokemon.observe(viewLifecycleOwner) {
-            binding.nameTextView.text = it.name
-            binding.heightText.text =
-                String.format(resources.getString(R.string.height), it.height * CORRECTION_INDEX)
-            binding.weightText.text =
-                String.format(resources.getString(R.string.weight), it.weight / CORRECTION_INDEX)
-            it.types.forEach {
-                val chip = Chip(binding.chipGroup.context)
-                chip.text = it.types.name
-                chip.isClickable = false
-                chip.isCheckable = false
-                binding.chipGroup.addView(chip)
-            }
-            Glide.with(this).load(it.sprites.frontDefault).into(binding.imageView)
-
-        }
+        showProgress()
 
         setOnBackPressedListener()
 
+        bindViews()
+
+    }
+
+    private fun showProgress() {
+        viewModel.shouldShowProgress.observe(viewLifecycleOwner) {
+            with(binding) {
+                progressDetail.isVisible = it
+                detailsCard.isVisible = !it
+                backButton.isVisible = !it
+            }
+        }
+    }
+
+    private fun bindViews() {
+        viewModel.pokemon.observe(viewLifecycleOwner) { pokeInfo ->
+            with(binding) {
+                nameTextView.text = pokeInfo.name
+                heightText.text =
+                    String.format(
+                        resources.getString(R.string.height),
+                        pokeInfo.height * CORRECTION_INDEX
+                    )
+                weightText.text =
+                    String.format(
+                        resources.getString(R.string.weight),
+                        pokeInfo.weight / CORRECTION_INDEX
+                    )
+                pokeInfo.types.forEach {
+                    val chip = Chip(binding.chipGroup.context)
+                    chip.text = it
+                    chip.isClickable = false
+                    chip.isCheckable = false
+                    chipGroup.addView(chip)
+                }
+            }
+            try {
+                Glide.with(this).load(pokeInfo.sprite).into(binding.imageView)
+            } catch (e: Exception) {
+                binding.imageView.setImageResource(R.drawable.tv_ball)
+            }
+
+        }
     }
 
     private fun setOnBackPressedListener() {
@@ -69,10 +98,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun parseArgs() {
-        if (!requireArguments().containsKey(POKEMON_ID)) {
+        if (!requireArguments().containsKey(POKEMON_NAME)) {
             throw RuntimeException("Pokemon ID is absent")
         }
-        pokemonId = requireArguments().getInt(POKEMON_ID)
+        pokemonName = requireArguments().getString(POKEMON_NAME).toString()
     }
 
     override fun onDestroyView() {
@@ -82,15 +111,15 @@ class DetailFragment : Fragment() {
 
     companion object {
 
-        private const val POKEMON_ID = "pokemon_id"
-        private const val UNDEFINED_ID = -1
+        private const val POKEMON_NAME = "pokemon_name"
+        private const val UNDEFINED_NAME = ""
         private const val CORRECTION_INDEX = 10.0
 
         @JvmStatic
-        fun newInstance(pokemonId: Int): DetailFragment {
+        fun newInstance(pokemonName: String): DetailFragment {
             return DetailFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(POKEMON_ID, pokemonId)
+                    putString(POKEMON_NAME, pokemonName)
                 }
             }
         }

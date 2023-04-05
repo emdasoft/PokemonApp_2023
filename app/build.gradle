@@ -50,6 +50,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.0"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+
+    //lifecycle
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -59,4 +67,15 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //pagination
+    def paging_version = "3.1.1"
+
+    implementation "androidx.paging:paging-runtime:$paging_version"
+    implementation "androidx.paging:paging-common-ktx:$paging_version"
+
+    //Room
+    implementation 'androidx.room:room-ktx:2.5.1'
+    implementation 'androidx.room:room-runtime:2.5.1'
+    kapt 'androidx.room:room-compiler:2.5.1'
 }

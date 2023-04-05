@@ -3,4 +3,6 @@
     <string name="height">Height: %s cm</string>
     <string name="weight">Weight: %s kg</string>
     <string name="back_btn">return</string>
+    <string name="update">update list</string>
+    <string name="sprite_image">sprite image</string>
 </resources>

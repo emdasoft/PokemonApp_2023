@@ -1,8 +1,7 @@
-package com.emdasoft.pokemonapp2023.data.retrofit
+package com.emdasoft.pokemonapp2023.data.network
 
-import com.emdasoft.pokemonapp2023.data.api.models.PokeApiResponse
-import com.emdasoft.pokemonapp2023.data.api.models.PokemonResponse
-import retrofit2.Response
+import com.emdasoft.pokemonapp2023.data.network.model.PokeApiResponse
+import com.emdasoft.pokemonapp2023.data.network.model.PokeInfoDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -13,10 +12,10 @@ interface PokeApiService {
     suspend fun getPokemonList(
         @Query("limit") limit: Int = DEFAULT_LIMIT,
         @Query("offset") offset: Int = DEFAULT_OFFSET
-    ): Response<PokeApiResponse>
+    ): PokeApiResponse
 
-    @GET("pokemon/{id}")
-    suspend fun getPokemonInfo(@Path("id") id: Int): Response<PokemonResponse>
+    @GET("pokemon/{name}")
+    suspend fun getPokemonInfo(@Path("name") name: String): PokeInfoDto
 
     companion object {
         private const val DEFAULT_LIMIT = 1000
