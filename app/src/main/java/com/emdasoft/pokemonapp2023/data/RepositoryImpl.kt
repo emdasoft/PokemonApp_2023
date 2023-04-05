@@ -5,7 +5,6 @@ import com.emdasoft.pokemonapp2023.data.database.PokeDatabase
 import com.emdasoft.pokemonapp2023.data.mappers.PokemonDetailMapper
 import com.emdasoft.pokemonapp2023.data.mappers.PokemonListMapper
 import com.emdasoft.pokemonapp2023.data.network.RetrofitInstance
-import com.emdasoft.pokemonapp2023.data.network.model.PokeInfoDto
 import com.emdasoft.pokemonapp2023.domain.entity.PokeInfo
 import com.emdasoft.pokemonapp2023.domain.entity.PokeName
 import com.emdasoft.pokemonapp2023.domain.repository.Repository
@@ -17,47 +16,27 @@ class RepositoryImpl(application: Application) : Repository {
     private val pokeListDao = PokeDatabase.getInstance(application).pokeListDao()
 
     override suspend fun getPokemonList(): List<PokeName> {
-        try {
+        return try {
             val response = RetrofitInstance.apiService.getPokemonList()
-            response.results.forEach {
-                pokeListDao.addPokemonName(listMapper.mapDtoToDbModel(it))
-            }
+            listMapper.mapListDtoModelToListEntity(response.results)
+
         } catch (e: Exception) {
+            listMapper.mapListDbModelToListEntity(pokeListDao.getPokemonListByName())
         }
-        return listMapper.mapListDbModelToListEntity(pokeListDao.getPokemonList())
-//        return listMapper.mapListDtoModelToListEntity(response.results)
 
-//        val response = RetrofitInstance.apiService.getPokemonList()
-//        response.body()?.let {
-//            it.results.forEach {
-//                pokeListDao.addPokemonName(listMapper.mapDtoToDbModel(it))
-//            }
-//        }
-//
-//        return listMapper.mapListDbModelToListEntity(pokeListDao.getPokemonList())
-
-//        val response = RetrofitInstance.apiService.getPokemonList()
-//        response.body()?.let {
-//            return listMapper.mapListDtoModelToListEntity(it.results)
-//        }
-//        return emptyList()
     }
 
-    override suspend fun getPokemonDetails(pokemonId: Int): PokeInfo {
+    override suspend fun getPokemonDetails(pokemonName: String): PokeInfo {
 
-        try {
+        return try {
             val pokemonResponse = RetrofitInstance.apiService.getPokemonInfo(
-                pokemonId
+                pokemonName
             )
             pokeListDao.addPokemonInfo(modelMapper.mapDtoToDbModel(pokemonResponse))
+            modelMapper.mapDbModelToEntity(pokeListDao.getPokemonInfo(pokemonName))
         } catch (e: Exception) {
-
+            modelMapper.mapDbModelToEntity(pokeListDao.getPokemonInfo(pokemonName))
         }
-
-
-        return modelMapper.mapDbModelToEntity(pokeListDao.getPokemonInfo(pokemonId))
-        //        return pokemonResponse.body()?.let {
-//            modelMapper.mapApiModelToEntity(it)
-//        }
     }
+
 }

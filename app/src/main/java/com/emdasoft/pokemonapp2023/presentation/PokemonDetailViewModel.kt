@@ -17,9 +17,9 @@ class PokemonDetailViewModel(application: Application) : AndroidViewModel(applic
     val pokemon: LiveData<PokeInfo>
         get() = _pokemon
 
-    fun getPokemon(pokemonId: Int) {
+    fun getPokemon(pokemonName: String) {
         viewModelScope.launch {
-            _pokemon.postValue(getPokemonDetailsUseCase.getPokemonDetails(pokemonId))
+            _pokemon.postValue(getPokemonDetailsUseCase.getPokemonDetails(pokemonName))
         }
     }
 

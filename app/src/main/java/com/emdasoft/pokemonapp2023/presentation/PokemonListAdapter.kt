@@ -38,13 +38,13 @@ class PokemonListAdapter(private val listener: SetOnItemClickListener) :
             tvPokemonName.text = pokemonItem.name
             tvPokemonId.text = String.format("#%s", position + INDEX_OFFSET)
             root.setOnClickListener {
-                listener.onItemClickListener(position)
+                listener.onItemClickListener(pokemonItem.name)
             }
         }
     }
 
     interface SetOnItemClickListener {
-        fun onItemClickListener(position: Int)
+        fun onItemClickListener(pokemonName: String)
     }
 
     companion object {

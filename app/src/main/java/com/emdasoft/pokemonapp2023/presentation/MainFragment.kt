@@ -55,10 +55,9 @@ class MainFragment : Fragment(), PokemonListAdapter.SetOnItemClickListener {
         }
     }
 
-    override fun onItemClickListener(position: Int) {
+    override fun onItemClickListener(pokemonName: String) {
         requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, DetailFragment.newInstance(
-                position + INDEX_OFFSET))
+            .replace(R.id.main_container, DetailFragment.newInstance(pokemonName))
             .addToBackStack(null)
             .commit()
     }
@@ -68,7 +67,4 @@ class MainFragment : Fragment(), PokemonListAdapter.SetOnItemClickListener {
         _binding = null
     }
 
-    companion object {
-        private const val INDEX_OFFSET = 1
-    }
 }

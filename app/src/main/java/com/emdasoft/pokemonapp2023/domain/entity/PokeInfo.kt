@@ -6,6 +6,6 @@ data class PokeInfo(
     val weight: Int,
     val height: Int,
     val sprite: String,
-    val types: String
+    val types: List<String>
 )
 

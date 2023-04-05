@@ -7,6 +7,6 @@ interface Repository {
 
     suspend fun getPokemonList(): List<PokeName>
 
-    suspend fun getPokemonDetails(pokemonId: Int): PokeInfo
+    suspend fun getPokemonDetails(pokemonName: String): PokeInfo
 
 }
