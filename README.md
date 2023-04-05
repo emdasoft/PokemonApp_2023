@@ -20,11 +20,10 @@ Functionality at that moment:
         
         ○ Page has back button to go back to the Pokemon's list
         
-        
-● Check Internet Connerction.
+● Data cached in the database to support offline mode.
 
-![1_1](https://user-images.githubusercontent.com/93913575/194752565-7b349108-4a88-444e-8468-1038b80f611e.png)
-![1-1](https://user-images.githubusercontent.com/93913575/194932634-7ca5706f-ebf5-483f-a29b-2a8a56556c23.png)
-![3-1](https://user-images.githubusercontent.com/93913575/194752569-f0f8897b-8d3b-4e3f-a6ff-5758abec95c3.png)
+![Screenshot_1680692218](https://user-images.githubusercontent.com/93913575/230061525-bb3f4b58-a42e-4b7c-abb3-45d57af4a498.jpg)
+![Screenshot_1680692329](https://user-images.githubusercontent.com/93913575/230061532-b9ceaa17-beed-4ab3-8598-79a801a44968.jpg)
+![Screenshot_1680692213](https://user-images.githubusercontent.com/93913575/230061537-7e0f297d-e551-4344-82e2-01b50ebb6b59.jpg)
 
 [Untitled.webm](https://user-images.githubusercontent.com/93913575/194752875-087fb103-2ecb-46af-8d4d-c2af495feaaf.webm)
