@@ -11,6 +11,9 @@ import com.emdasoft.pokemonapp2023.domain.repository.Repository
 
 class RepositoryImpl(application: Application) : Repository {
 
+    //TODO "add pagination"
+    //TODO "add consider and handle possible states (offline, not loading, etc)
+
     private val listMapper = PokemonListMapper()
     private val modelMapper = PokemonDetailMapper()
     private val pokeListDao = PokeDatabase.getInstance(application).pokeListDao()
@@ -23,11 +26,9 @@ class RepositoryImpl(application: Application) : Repository {
         } catch (e: Exception) {
             listMapper.mapListDbModelToListEntity(pokeListDao.getPokemonListByName())
         }
-
     }
 
     override suspend fun getPokemonDetails(pokemonName: String): PokeInfo {
-
         return try {
             val pokemonResponse = RetrofitInstance.apiService.getPokemonInfo(
                 pokemonName
@@ -40,3 +41,5 @@ class RepositoryImpl(application: Application) : Repository {
     }
 
 }
+
+

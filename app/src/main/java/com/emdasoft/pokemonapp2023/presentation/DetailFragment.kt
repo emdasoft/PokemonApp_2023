@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -41,27 +42,46 @@ class DetailFragment : Fragment() {
 
         viewModel.getPokemon(pokemonName)
 
-        bindViews()
+        showProgress()
 
         setOnBackPressedListener()
 
+        bindViews()
+
+    }
+
+    private fun showProgress() {
+        viewModel.shouldShowProgress.observe(viewLifecycleOwner) {
+            with(binding) {
+                progressDetail.isVisible = it
+                detailsCard.isVisible = !it
+                backButton.isVisible = !it
+            }
+        }
     }
 
     private fun bindViews() {
         viewModel.pokemon.observe(viewLifecycleOwner) { pokeInfo ->
-            binding.nameTextView.text = pokeInfo.name
-            binding.heightText.text =
-                String.format(resources.getString(R.string.height), pokeInfo.height * CORRECTION_INDEX)
-            binding.weightText.text =
-                String.format(resources.getString(R.string.weight), pokeInfo.weight / CORRECTION_INDEX)
-            pokeInfo.types.forEach {
-                val chip = Chip(binding.chipGroup.context)
-                chip.text = it
-                chip.isClickable = false
-                chip.isCheckable = false
-                binding.chipGroup.addView(chip)
+            with(binding) {
+                nameTextView.text = pokeInfo.name
+                heightText.text =
+                    String.format(
+                        resources.getString(R.string.height),
+                        pokeInfo.height * CORRECTION_INDEX
+                    )
+                weightText.text =
+                    String.format(
+                        resources.getString(R.string.weight),
+                        pokeInfo.weight / CORRECTION_INDEX
+                    )
+                pokeInfo.types.forEach {
+                    val chip = Chip(binding.chipGroup.context)
+                    chip.text = it
+                    chip.isClickable = false
+                    chip.isCheckable = false
+                    chipGroup.addView(chip)
+                }
             }
-
             try {
                 Glide.with(this).load(pokeInfo.sprite).into(binding.imageView)
             } catch (e: Exception) {

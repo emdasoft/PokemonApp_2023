@@ -1,10 +1,12 @@
 package com.emdasoft.pokemonapp2023.presentation
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emdasoft.pokemonapp2023.R
@@ -18,28 +20,57 @@ class MainFragment : Fragment(), PokemonListAdapter.SetOnItemClickListener {
 
     private lateinit var rvAdapter: PokemonListAdapter
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        addUpdateMenu()
 
-        viewModel.getPokemonList()
+        setupRecyclerView()
 
+        viewModelObserve()
+
+    }
+
+    private fun addUpdateMenu() {
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.update_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    R.id.update -> {
+                        viewModel.getPokemonList()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
+
+    private fun viewModelObserve() {
         viewModel.pokemonList.observe(viewLifecycleOwner) {
             rvAdapter.pokemonList = it
         }
 
-        setupRecyclerView()
+        viewModel.shouldShowProgress.observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = it
+        }
 
     }
 
@@ -61,6 +92,7 @@ class MainFragment : Fragment(), PokemonListAdapter.SetOnItemClickListener {
             .addToBackStack(null)
             .commit()
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

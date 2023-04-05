@@ -12,16 +12,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = RepositoryImpl(application)
     private val getPokemonListUseCase = GetPokemonListUseCase(repository)
 
-
     private val _pokemonList = MutableLiveData<List<PokeName>>()
     val pokemonList: LiveData<List<PokeName>>
         get() = _pokemonList
 
+    private val _shouldShowProgress = MutableLiveData<Boolean>()
+    val shouldShowProgress: LiveData<Boolean>
+        get() = _shouldShowProgress
+
+    init {
+        getPokemonList()
+    }
 
     fun getPokemonList() {
+        _shouldShowProgress.value = true
         viewModelScope.launch {
             _pokemonList.postValue(getPokemonListUseCase.getPokemonList())
+            _shouldShowProgress.value = false
         }
+
     }
 
 }

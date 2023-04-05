@@ -17,9 +17,15 @@ class PokemonDetailViewModel(application: Application) : AndroidViewModel(applic
     val pokemon: LiveData<PokeInfo>
         get() = _pokemon
 
+    private val _shouldShowProgress = MutableLiveData<Boolean>()
+    val shouldShowProgress: LiveData<Boolean>
+        get() = _shouldShowProgress
+
     fun getPokemon(pokemonName: String) {
+        _shouldShowProgress.value = true
         viewModelScope.launch {
             _pokemon.postValue(getPokemonDetailsUseCase.getPokemonDetails(pokemonName))
+            _shouldShowProgress.value = false
         }
     }
 
